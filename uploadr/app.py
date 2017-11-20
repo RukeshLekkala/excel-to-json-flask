@@ -58,23 +58,27 @@ def upload():
     #         return "Couldn't create upload directory: {}".format(target)
 
     for upload in request.files.getlist("file"):
-        filename = upload.filename.rsplit("/")[0]
-        filename =  filename.split('.')[0]
+        try:
+            filename = upload.filename.rsplit("/")[0]
+            filename =  filename.split('.')[0]
 
-        wb = load_workbook(filename=upload, read_only=True)
-        # filename = file.split('.')
+            wb = load_workbook(filename=upload, read_only=True)
+            # filename = file.split('.')
 
-        sheets = wb.get_sheet_names()
-        for sheet in sheets:
-            ws = wb[sheet]
-            
-            all_data_to_json(ws, filename, sheet)
-        
+            sheets = wb.get_sheet_names()
+            for sheet in sheets:
+                ws = wb[sheet]
+                
+                all_data_to_json(ws, filename, sheet)
 
-    try:
-        return render_template('index.html')
-    except:
-        return render_template('index.html')
+            return render_template('index.html')
+        except:
+            return render_template('index.html')
+
+    # try:
+    #     return render_template('index.html')
+    # except:
+    #     return render_template('index.html')
 
 @app.route('/search')
 def search():

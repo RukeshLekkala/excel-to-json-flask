@@ -2,28 +2,33 @@
 
 {% block body %}
 
-
-
 <h1>Converter Excel em Json</h1>
 <h3>Converter seu documento Excel online</h3>
 
 <form id="upload-form" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-    <div id="dropbox">
-        Arraste seu documento aqui!
-    </div><p>
-
-    <fieldset id="progress" style="display: none">
-        <legend>Progresso</legend>
+    <div class="dropbox">
+        <div id="dropbox">
+            Arraste seu documento aqui!
+        </div><p>
+    </div>
+    <fieldset id="progress" class="text-center" style=" margin-top:20px; display: none">
+        <!-- <legend>Progresso</legend> -->
 
         <div class="progress-trough">
-            <div id="progress-bar" class="progress-bar">0%</div>
+            <div id="progress-bar" class="progress-bar" style="margin-bottom: 10px">0%</div>
         </div>
     </fieldset><p>
-
-<div class="col-md-12 text-center" style="margin-top: 40px;">
-    <input type="submit" value="Converter" class="btn btn-outline-success" id="upload-button">
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 text-center" style="margin-top: 20px;">
+        <input type="submit" value="Converter" class="btn btn-outline-success btn-block" id="upload-button">
+    </div>
 </div>
 </form>
+
+<div id="teste">
+    
+</div>
 
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/uploadr.js') }}"></script>

@@ -1,14 +1,31 @@
-#dropbox {
-    border: 2px dashed #000000;
-    
+.dropbox {
+    /*border: 2px dashed #28a745;*/
+    background-color: #57D673;
     margin-top: 40px;
+
+    padding-left: 18px;
+    padding-right: 18px;
+    padding-top: 18px;
+    padding-bottom: 3px;
+    
+    
+}
+
+#dropbox {
+    border: 2px dashed #08581A;
+    background-color: #28a745;
+    color: white;
+    font-size: 20px;
+
     padding: 140px;
     
     text-align: center;
 }
 
 #dropbox.active {
-    border: 4px dashed #FF0000;
+    background-color: #fff;
+    color: #28a745;
+    /*border: 4px dashed #FF0000;*/
 }
 
 .progress-trough {

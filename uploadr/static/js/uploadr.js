@@ -3,9 +3,8 @@
  ******************************************************************************/
 
 // Constants
-var MAX_UPLOAD_FILE_SIZE = 1024*1024; // 1 MB
 var UPLOAD_URL = "/upload";
-var NEXT_URL   = "/files/";
+var NEXT_URL   = "/search";
 
 // List of pending files to handle when the Upload button is finally clicked.
 var PENDING_FILES  = [];
@@ -14,6 +13,8 @@ var PENDING_FILES  = [];
 $(document).ready(function() {
     // Set up the drag/drop zone.
     initDropbox();
+
+    $("#upload-form :input").attr("disabled", "disabled");
 
     // Set up the handler for the file input box.
     $("#file-picker").on("change", function() {
@@ -37,7 +38,7 @@ function doUpload() {
     var $progressBar   = $("#progress-bar");
 
     // Gray out the form.
-    $("#upload-form :input").attr("disabled", "disabled");
+    // $("#upload-form :input").attr("disabled", "disabled");
 
     // Initialize the progress bar.
     $progressBar.css({"width": "0%"});
@@ -45,11 +46,18 @@ function doUpload() {
     // Collect the form data.
     fd = collectFormData();
 
+    // var count = 0;
     // Attach the files.
     for (var i = 0, ie = PENDING_FILES.length; i < ie; i++) {
         // Collect the other form data.
         fd.append("file", PENDING_FILES[i]);
+        // count = count + 1;
     }
+
+    // alert(count);
+    // if (count < 1) {
+    //     $("#upload-form :input").attr("disabled", "disabled");
+    // }
 
     // Inform the back-end that we're doing this over ajax.
     fd.append("__ajax", "true");
@@ -80,23 +88,27 @@ function doUpload() {
         cache: false,
         data: fd,
         success: function(data) {
+            
             $progressBar.css({"width": "100%"});
-            data = JSON.parse(data);
+            alert("download executado com sucesso");
+            // $("#teste").html(data.msg);
+            // return window.location = "/search";
+            // data = JSON.parse(data);
 
-            // How'd it go?
-            if (data.status === "error") {
-                // Uh-oh.
-                window.alert(data.msg);
-                $("#upload-form :input").removeAttr("disabled");
-                return;
-            }
-            else {
-                // Ok! Get the UUID.
-                var uuid = data.msg;
-                window.location = NEXT_URL + uuid;
-            }
+            // // How'd it go?
+            // if (data.status === "error") {
+            //     // Uh-oh.
+            //     window.alert(data.msg);
+            //     $("#upload-form :input").removeAttr("disabled");
+            //     return;
+            // }
+            // else {
+            //     window.location = NEXT_URL;
+            // }
         },
     });
+
+    // window.location = NEXT_URL;
 }
 
 
@@ -109,6 +121,8 @@ function collectFormData() {
         var name  = $this.attr("name");
         var type  = $this.attr("type") || "";
         var value = $this.val();
+
+        // console.log(name,type,value);
 
         // No name = no care.
         if (name === undefined) {
@@ -163,12 +177,14 @@ function initDropbox() {
         e.preventDefault();
         $(this).removeClass("active");
 
+        $("#upload-form :input").removeAttr('disabled');
+
         // Get the files.
         var files = e.originalEvent.dataTransfer.files;
         handleFiles(files);
 
         // Update the display to acknowledge the number of pending files.
-        $dropbox.text(PENDING_FILES.length + " files ready for upload!");
+        $dropbox.text(PENDING_FILES.length + " arquivos prontos!");
     });
 
     // If the files are dropped outside of the drop zone, the browser will
