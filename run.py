@@ -12,7 +12,7 @@ parser.add_argument(
     "--port", "-p",
     type=int,
     help="Port to listen on",
-    default=2006,
+    default=5000,
 )
 args = parser.parse_args()
 
