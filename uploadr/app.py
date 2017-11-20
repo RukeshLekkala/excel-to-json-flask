@@ -75,3 +75,7 @@ def upload():
         return render_template('index.html')
     except:
         return render_template('index.html')
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
