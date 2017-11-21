@@ -1,6 +1,6 @@
 # excel-to-json-flask
 
-* Supported file extension .xlsx, .xlsm, .xltx, .xltm *
+*Supported file extension .xlsx, .xlsm, .xltx, .xltm*
 
 Dropzone forked from [flask-multi-upload](https://github.com/kirsle/flask-multi-upload), many thanks to the author.
 

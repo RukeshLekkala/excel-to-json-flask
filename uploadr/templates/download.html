@@ -5,36 +5,43 @@
 <h1>Download Json</h1>
 <hr>
 
-<div class="row" style="background-color: #f6f5f7; padding-top: 40px;">
-{% for file in files %}
-     
-    <div class="json-item col-md-6">
-        <div class="media">
-          <div class="media-left">
-            <a href="/static/results/{{ file }}" download>
-              <img class="media-object json-img" src="static/img/json_icon.png">
-            </a>
-          </div>
-          <div class="media-body">
-            <h4 class="media-heading">{{ file }}</h4>
-            <div class="json-btns">
-                <div class="row">
-                    <div class="col-md-3 text-center"><a href="/static/results/{{ file }}">visualizar</a></div>
-                    <div class="col-md-2 text-center"><a href="/static/results/{{ file }}" download>download</a></div>
-                </div>
+{% if files %}
+  <div class="row" style="background-color: #f6f5f7; padding-top: 40px;">
+  {% for file in files %}
+       
+      <div class="json-item col-md-6">
+          <div class="media">
+            <div class="media-left">
+              <a href="/static/results/{{ file }}" download>
+                <img class="media-object json-img" src="static/img/json_icon.png">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{ file }}</h4>
+              <div class="json-btns">
+                  <div class="row">
+                      <div class="col-md-3 text-center"><a href="/static/results/{{ file }}">visualizar</a></div>
+                      <div class="col-md-2 text-center"><a href="/static/results/{{ file }}" download>download</a></div>
+                  </div>
+              </div>
             </div>
           </div>
-        </div>
-    </div>
-     <!-- <a href="/static/results/{{ file }}" download>
-        <div class="col-md-6">
-            <img class="json-img" src="static/img/json_icon.png"></img>
-        </div>
-        <div class="col-md-6">
-         {{ file }}
-         </div>
-     </a> -->
-{% endfor %}
-</div>
+      </div>
+       <!-- <a href="/static/results/{{ file }}" download>
+          <div class="col-md-6">
+              <img class="json-img" src="static/img/json_icon.png"></img>
+          </div>
+          <div class="col-md-6">
+           {{ file }}
+           </div>
+       </a> -->
+  {% endfor %}
+  </div>
+
+{% else %}
+
+  <h4>Ainda não converteu nenhum excel para json</h4>
+
+{% endif %}
 
 {% endblock %}

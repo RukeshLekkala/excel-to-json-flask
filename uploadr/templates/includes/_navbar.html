@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-bottom: 20px;">
-  <a class="navbar-brand" href="#">Excel to Json</a>
+  <a class="navbar-brand" href="{{url_for('index')}}">Excel to Json</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,10 +9,10 @@
         <a class="nav-link" href="/">Início</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/download">Download</a>
+        <a class="nav-link" href="{{url_for('download')}}">Download</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/search">Buscar</a>
+        <a class="nav-link" href="{{url_for('search')}}">Buscar</a>
       </li>
     </ul>
   </div>
