@@ -1,6 +1,70 @@
+.json-item {
+    margin-bottom: 25px;
+}
+
+.json-item .media-body{
+    margin-left: 25px;
+}
+
+.json-item .media-body a{
+    
+    margin-top: 10px;
+
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    font: bold 11px;
+    text-decoration: none;
+    background-color: #9777a8;
+    color: #fff;
+
+}
+
+.json-item .media-body a:hover{
+    
+    margin-top: 10px;
+
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    font: bold 11px;
+    text-decoration: none;
+    background-color: #7b578e;
+    color: #fff;
+
+}
+
+.json-img {
+    height: 80px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
+
+}
+
 .dropbox {
     /*border: 2px dashed #28a745;*/
-    background-color: #57D673;
+    background-color: #45A876;
     margin-top: 40px;
 
     padding-left: 18px;
@@ -12,8 +76,8 @@
 }
 
 #dropbox {
-    border: 2px dashed #08581A;
-    background-color: #28a745;
+    border: 2px dashed #83FEC0;
+    background-color: #1e6a43;
     color: white;
     font-size: 20px;
 

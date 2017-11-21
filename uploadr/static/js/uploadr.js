@@ -90,7 +90,8 @@ function doUpload() {
         success: function(data) {
             
             $progressBar.css({"width": "100%"});
-            alert("download executado com sucesso");
+            // alert("download executado com sucesso");
+            window.location = '/download';
             // $("#teste").html(data.msg);
             // return window.location = "/search";
             // data = JSON.parse(data);

@@ -9,12 +9,12 @@ from openpyxl import load_workbook
 
 app = Flask(__name__)
 
-# DIR_JSON = os.path.join("json/")
+DIR_JSON = os.path.join("uploadr/static/results/")
 
 # READ ALL ROWS IN WORKSHEET AND TRANSFORM INTO JSON
 def all_data_to_json(worksheet, filename, sheetname):
     # with open('{}{}_{}.json'.format(DIR_JSON,filename,sheetname), 'w') as file:
-    with open('{}_{}.json'.format(filename,sheetname), 'w') as file:
+    with open('{}{}_{}.json'.format(DIR_JSON, filename,sheetname), 'w') as file:
         json_data = []
 
         for row in range(1, worksheet.max_row):
@@ -58,23 +58,23 @@ def upload():
     #         return "Couldn't create upload directory: {}".format(target)
 
     for upload in request.files.getlist("file"):
-        try:
-            filename = upload.filename.rsplit("/")[0]
-            filename =  filename.split('.')[0]
+        # try:
+        filename = upload.filename.rsplit("/")[0]
+        filename =  filename.split('.')[0]
 
-            wb = load_workbook(filename=upload, read_only=True)
-            # filename = file.split('.')
+        wb = load_workbook(filename=upload, read_only=True)
+        # filename = file.split('.')
 
-            sheets = wb.get_sheet_names()
-            for sheet in sheets:
-                ws = wb[sheet]
-                
-                all_data_to_json(ws, filename, sheet)
+        sheets = wb.get_sheet_names()
+        for sheet in sheets:
+            ws = wb[sheet]
+            
+            all_data_to_json(ws, filename, sheet)
 
-            return render_template('index.html')
-        except:
-            return render_template('index.html')
+        # except:
+            # return render_template('index.html')
 
+    return render_template('index.html')
     # try:
     #     return render_template('index.html')
     # except:
@@ -83,3 +83,15 @@ def upload():
 @app.route('/search')
 def search():
     return render_template('search.html')
+
+@app.route('/download')
+def download():
+
+    files = []
+    directory = os.listdir(DIR_JSON)
+    
+    for file in directory:
+        if(".json" in file):
+            files.append(file)
+
+    return render_template('download.html', files=files)
