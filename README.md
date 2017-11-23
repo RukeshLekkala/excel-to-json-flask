@@ -1,8 +1,8 @@
 # excel-to-json-flask
 
-*Supported file extension .xlsx, .xlsm, .xltx, .xltm*
+*Read this in other languages: [English](README.md), [Português](README.pt_br.md).*
 
-Dropzone forked from [flask-multi-upload](https://github.com/kirsle/flask-multi-upload), many thanks to the author.
+*Supported file extension .xlsx, .xlsm, .xltx, .xltm*
 
 ## Installation ##
 
@@ -21,3 +21,11 @@ Check [official flask documentation](http://flask.pocoo.org) if nedded.
 ## Run ##
 
 `$ python run.py`
+
+## Support ##
+
+Thank you the following authors for awesome source-codes provided, don't forget to support their projects.
+
+* Dropzone forked from [flask-multi-upload](https://github.com/kirsle/flask-multi-upload).
+
+* Github Corner from [github-corners](https://github.com/tholman/github-corners).
