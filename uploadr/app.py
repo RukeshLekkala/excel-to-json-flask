@@ -4,8 +4,8 @@ import os
 import json
 import glob
 
-from openpyxl import Workbook
-from openpyxl import load_workbook
+from openpyxl import Workbook , load_workbook
+from openpyxl.utils import column_index_from_string
 
 app = Flask(__name__)
 
@@ -17,19 +17,24 @@ def all_data_to_json(worksheet, filename, sheetname):
     with open('{}{}_{}.json'.format(DIR_JSON, filename,sheetname), 'w') as file:
         json_data = []
 
-        for row in range(1, worksheet.max_row):
-            item = {}
-            for column in range(worksheet.max_column):
-                try:
-                    item[worksheet.cell(row=1, column=column+1).value.upper()] = worksheet.cell(row=row+1, column=column+1).value.encode('utf-8')
-                except:
-                    try:
-                        item[worksheet.cell(row=1, column=column+1).value.upper()] = worksheet.cell(row=row+1, column=column+1).value
-                    except:
-                        item[worksheet.cell(row=1, column=column+1).value] = worksheet.cell(row=row+1, column=column+1).value
-            json_data.append(item)
+        max_row = worksheet.max_row
+        max_column = worksheet.max_column
 
-        json.dump(json_data, file, indent = 4, ensure_ascii = False) # sort_keys = True
+        cabecalho = []
+        for col in worksheet.iter_rows(min_row=1, max_col=max_column, max_row=1):
+            for cell in col:
+                cabecalho.append(cell.value)
+        
+        for row in worksheet.iter_rows(min_row=2, max_col=max_column, max_row=max_row):
+            item = {}
+            for cell in row: 
+                try:
+                    item[cabecalho[column_index_from_string(cell.column)]] = cell.value
+                except:
+                    item['None'] = cell.value
+                json_data.append(item)
+
+        json.dump(str(json_data), file, indent = 4, ensure_ascii = False) # sort_keys = True
         file.close()
 
 
@@ -62,7 +67,7 @@ def upload():
         filename = upload.filename.rsplit("/")[0]
         filename =  filename.split('.')[0]
 
-        wb = load_workbook(filename=upload, read_only=True)
+        wb = load_workbook(filename=upload)#, read_only=True)
         # filename = file.split('.')
 
         sheets = wb.get_sheet_names()
