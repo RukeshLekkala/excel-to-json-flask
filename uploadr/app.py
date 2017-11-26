@@ -24,15 +24,21 @@ def all_data_to_json(worksheet, filename, sheetname):
         for col in worksheet.iter_rows(min_row=1, max_col=max_column, max_row=1):
             for cell in col:
                 cabecalho.append(cell.value)
-        
+
         for row in worksheet.iter_rows(min_row=2, max_col=max_column, max_row=max_row):
             item = {}
             for cell in row: 
                 try:
-                    item[cabecalho[column_index_from_string(cell.column)]] = cell.value
+                    item[cabecalho[column_index_from_string(cell.column)-1].encode("utf-8")] = cell.value.encode("utf-8")
                 except:
-                    item['None'] = cell.value
-                json_data.append(item)
+                    try:
+                        item[cabecalho[column_index_from_string(cell.column)-1].encode("utf-8")] = cell.value
+                    except:
+                        try:
+                            item[cabecalho[column_index_from_string(cell.column)-1]] = cell.value.encode("utf-8")
+                        except:
+                            item['None'] = cell.value
+            json_data.append(item)
 
         json.dump(str(json_data), file, indent = 4, ensure_ascii = False) # sort_keys = True
         file.close()
