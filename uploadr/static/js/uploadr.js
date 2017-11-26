@@ -88,10 +88,8 @@ function doUpload() {
         cache: false,
         data: fd,
         success: function(data) {
-            
             $progressBar.css({"width": "100%"});
 
-            // $("converter").removeAttr('disabled')
             // alert("download executado com sucesso");
             window.location = '/download';
             // $("#teste").html(data.msg);
