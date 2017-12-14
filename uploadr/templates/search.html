@@ -21,12 +21,89 @@
     </div>
 
     <div style="margin-top: 20px;">
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-lg-12">
-                {{result | safe}}
-            </div>
-        </div>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                    {% for k in key %}
+                        <th id="{{k}}" value="{{k}}">{{k}}</th>
+                    {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for row in result["DATA_INFOS"] %}
+                    {{row |tojson|safe}}
+                        </tr>
+                        {% for key in row %}
+                            <th>{{row[key]}}</th>
+                        {% endfor %}
+                        </tr>
+                  {% endfor %}
+                </tbody>
+            </table>
+
+        </div> -->
+
+        {% if result %}
+            
+            <div id="showData"></div>
+
+            <script>
+                window.onload = function() {
+                  CreateTableFromJSON();
+                };
+                
+                function CreateTableFromJSON() {
+                    var myBooks = {{result["DATA_INFOS"] |tojson|safe}};
+
+                    // EXTRACT VALUE FOR HTML HEADER. 
+                    // ('Book ID', 'Book Name', 'Category' and 'Price')
+                    var col = [];
+                    for (var i = 0; i < myBooks.length; i++) {
+                        for (var key in myBooks[i]) {
+                            if (col.indexOf(key) === -1) {
+                                col.push(key);
+                            }
+                        }
+                    }
+
+                    // CREATE DYNAMIC TABLE.
+                    var table = document.createElement("table");
+                    table.className = "table table-hover table-bordered";
+
+                    // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+                    var tr = table.insertRow(-1);                   // TABLE ROW.
+
+                    for (var i = 0; i < col.length; i++) {
+                        var th = document.createElement("th");      // TABLE HEADER.
+                        th.innerHTML = col[i];
+                        tr.appendChild(th);
+                    }
+
+                    // ADD JSON DATA TO THE TABLE AS ROWS.
+                    for (var i = 0; i < myBooks.length; i++) {
+
+                        tr = table.insertRow(-1);
+
+                        for (var j = 0; j < col.length; j++) {
+                            var tabCell = tr.insertCell(-1);
+                            tabCell.innerHTML = myBooks[i][col[j]];
+                        }
+                    }
+
+                    // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+                    var divContainer = document.getElementById("showData");
+                    divContainer.innerHTML = "";
+                    divContainer.appendChild(table);
+                }
+            </script>
+        {% else %}
+            <div class="alert alert-danger text-center" role="alert"> Nenhuma planilha com esse identificador!</div>
+        {% endif %}
     </div>
+
 
 {% endblock %}
 

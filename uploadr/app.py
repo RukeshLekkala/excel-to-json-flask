@@ -109,7 +109,6 @@ def upload():
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    html = ''
     if request.method == 'POST':
         word = request.form['word']
 
@@ -149,31 +148,13 @@ def search():
                     json.dump(result_data, json_result, indent = 4)
                     json_result.close()
         else:
-            html = '<div class="alert alert-danger text-center" role="alert"> Nenhuma planilha com esse identificador!</div>'
-            return render_template('search.html', result=html)            
+            return render_template('search.html', result={})            
 
         data = json.load(open(DIR_JSON + "result.json"))
-        html = '<table class="table table-hover table-bordered">'
-        for row in data["DATA_INFOS"]:
-            # print row
-            html = html + '<tr>'
-            for key in row:
-                html = html + '<th>'
-                try:
-                    html = html + row[key]
-                except:
-                    try:
-                        html = html + str(row[key])
-                    except:
-                        html = html + "null"
-                html = html + '</th>' 
-            html = html + '</tr>'
 
-        html = html + '</table>'
-
-        return render_template('search.html', result=html) 
+        return render_template('search.html', result=data) 
     else:
-        return render_template('search.html', result=html)
+        return render_template('search.html', result={})
 
 @app.route('/download')
 def download():
