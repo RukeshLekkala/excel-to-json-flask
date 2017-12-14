@@ -15,8 +15,6 @@ DIR_JSON = os.path.join("uploadr/static/results/")
 def all_data_to_json(worksheet, filename, sheetname):
     # with open('{}{}_{}.json'.format(DIR_JSON,filename,sheetname), 'w') as file:
     with open('{}{}_{}.json'.format(DIR_JSON, filename,sheetname), 'w') as file:
-        json_data = []
-
         max_row = worksheet.max_row
         max_column = worksheet.max_column
 
@@ -25,9 +23,16 @@ def all_data_to_json(worksheet, filename, sheetname):
             for cell in col:
                 cabecalho.append(cell.value)
 
+        data = []
         for row in worksheet.iter_rows(min_row=2, max_col=max_column, max_row=max_row):
             item = {}
             for cell in row: 
+                try:
+                    if("Date" in cabecalho[column_index_from_string(cell.column)-1] or "Data" in cabecalho[column_index_from_string(cell.column)-1]):
+                        item["Date"] = str(cell.value)
+                        continue
+                except:
+                    x = 0
                 try:
                     item[cabecalho[column_index_from_string(cell.column)-1].encode("utf-8")] = cell.value.encode("utf-8")
                 except:
@@ -38,9 +43,14 @@ def all_data_to_json(worksheet, filename, sheetname):
                             item[cabecalho[column_index_from_string(cell.column)-1]] = cell.value.encode("utf-8")
                         except:
                             item['None'] = cell.value
-            json_data.append(item)
+            data.append(item)
+        
+        json_data = {
+            "DATA_INFOS" : data,
+            "DATA_NUMBER" : max_row - 1
+        }
 
-        json.dump(str(json_data), file, indent = 4, ensure_ascii = False) # sort_keys = True
+        json.dump(json_data, file, indent = 4, ensure_ascii = False)
         file.close()
 
 
@@ -93,6 +103,10 @@ def upload():
 
 @app.route('/search')
 def search():
+    files = os.listdir(DIR_JSON)
+    for file in files: 
+        if(".json" in file):
+            print file
     return render_template('search.html')
 
 @app.route('/download')
