@@ -53,6 +53,12 @@ def all_data_to_json(worksheet, filename, sheetname):
         json.dump(json_data, file, indent = 4, ensure_ascii = False)
         file.close()
 
+def identifier(data, word):
+    for line in data["DATA_INFOS"]:
+        for string in line:
+            if(string == word):
+                return True
+        return False
 
 @app.route("/")
 def index():
@@ -101,13 +107,23 @@ def upload():
     # except:
     #     return render_template('index.html')
 
-@app.route('/search')
+@app.route('/search', methods=['GET', 'POST'])
 def search():
-    files = os.listdir(DIR_JSON)
-    for file in files: 
-        if(".json" in file):
-            print file
-    return render_template('search.html')
+    if request.method == 'POST':
+        word = request.form['word']
+
+        files = os.listdir(DIR_JSON)
+
+        result = []
+        for file in files:
+            if(".json" in file):            
+                data = json.load(open(DIR_JSON + file))
+                
+                if(identifier(data, word)):
+                    result.append(file)
+        return render_template('search.html', result=result) 
+    else:
+        return render_template('search.html', result=None)
 
 @app.route('/download')
 def download():

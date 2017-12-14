@@ -2,22 +2,61 @@
 
 {% block body %}
 
-<div class="text-center">
+<!-- <div class="text-center"> -->
     <!-- <h2>Converter Excel em Json</h2> -->
-    <h3 style="margin-bottom: 20px">Identificador</h3>
+    <h3 style="margin-bottom: 20px" class="text-center">Identificador</h3>
 	
 	<div class="row">
 	<div class="col-lg-3"></div>
 	<div class="col-lg-6">
-	<div class="input-group">
-      <input type="text" class="form-control" placeholder="Pesquise o identificador em comum">
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Buscar</button>
-      </span>
-    </div>	
+        <form id="search" action="{{ url_for('search') }}" method="POST">
+            <div class="input-group">
+              <input name="word" type="text" class="form-control" placeholder="Pesquise o identificador em comum">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit">Buscar</button>
+              </span>
+            </div>	
+        </form>
     </div>
     </div>
 
-</div>
+    <div class="row" style="margin-top:20px;">
+    {% if result %}
+        <div class="row" style="background-color: #f6f5f7; padding-top: 40px;">
+        {% for file in result %}
+        <!-- <h5 class="col-lg-12">{{result}}</h5> -->
+        <div class="json-item col-md-6">
+          <div class="media">
+            <div class="media-left">
+              <a href="/static/results/{{ file }}" download>
+                <img class="media-object json-img" src="static/img/json_icon.png">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{ file }}</h4>
+              <div class="json-btns">
+                  <div class="row">
+                      <div class="col-md-3 text-center"><a href="/static/results/{{ file }}">visualizar</a></div>
+                      <div class="col-md-2 text-center"><a href="/static/results/{{ file }}" download>download</a></div>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+       <!-- <a href="/static/results/{{ file }}" download>
+          <div class="col-md-6">
+              <img class="json-img" src="static/img/json_icon.png"></img>
+          </div>
+          <div class="col-md-6">
+           {{ file }}
+           </div>
+       </a> -->
+      {% endfor %}
+      </div>
+    {% else %}
+        <h5 class="col-lg-12 text-center">nenhuma planilha com esse identificador</h5>
+    {% endif %}
+    </div>
+<!-- </div> -->
 
 {% endblock %}
